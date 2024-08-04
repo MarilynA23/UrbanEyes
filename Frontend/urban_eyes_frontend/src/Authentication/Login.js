@@ -7,8 +7,9 @@ const LoginPage = ({ navigation, onLoginSuccess }) => {
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        const correctUserName = 't';
-        const correctPassword = 'p';
+        // Placeholders:
+        const correctUserName = '';
+        const correctPassword = '';
 
         if (userName === correctUserName && password === correctPassword) {
             alert('Logged in successfully!');

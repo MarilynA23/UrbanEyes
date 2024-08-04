@@ -8,7 +8,7 @@ const App = () => {
 
     useEffect(() => {
         // Placeholder check for authentication status
-        const userIsLoggedIn = true; // Simulate authentication status
+        const userIsLoggedIn = false; // Simulate authentication status
         setIsLoggedIn(userIsLoggedIn);
     }, []);
 
