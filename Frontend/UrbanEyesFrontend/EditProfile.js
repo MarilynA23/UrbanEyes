@@ -8,16 +8,27 @@ import {
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
 
-const EditProfile = ({ navigation }) => {
+const EditProfile = ({ navigation, route }) => {
   // extracting details
-  const [name, setName] = useState('Nand');
-  const [email, setEmail] = useState('@whatnot');
-  const [city, setCity] = useState('Dubai');
-  const [username, setUsername] = useState('yoo');
-  const [password, setPassword] = useState('whaa');
+  const {profile} = route.params;
+  const [name, setName] = useState(profile.Name);
+  const [email, setEmail] = useState(profile['Email Id']);
+  const [city, setCity] = useState(profile.City);
+  const [username, setUsername] = useState(profile.Username);
+  const [password, setPassword] = useState(profile.Password);
 
-  const makeChanges = () => {
+  const makeChanges = async () => {
+
+    try {
+      const response = await axios.put('', {
+
+      });
+    }
+    catch(error) {
+      alert(error.response.message)
+    }
     navigation.navigate("Profile");
   }
 

@@ -10,13 +10,16 @@ import {
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Profile = ({navigation}) => {
+const Profile = ({navigation, route}) => {
+
+  const {profile} = route.params;
+  alert(`prof is ${JSON.stringify(profile)}`)
   // extracting details
-  const name = 'Nand';
-  const email = '@whatnot';
-  const city = 'Dubai';
-  const username = 'yoo';
-  const password = 'whaa';
+  const name = profile.Name;
+  const email = profile['Email Id'];
+  const city = profile.City;
+  const username = profile.Username;
+  const password = profile.Password;
 
   return (
     <>

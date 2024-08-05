@@ -1,14 +1,69 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import BACKEND_URL from './Signup';
+import axios from "axios";
 
-const LoginPage = ({ navigation, route }) => {
+const LoginPage = ({ navigation }) => {
     const [userName, setuserName] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    let prof = null;
 
-    const handleLogin = () => {
+    const respExample = {
+        "id": "recwtMw0DwkPB2AaC",
+        "createdTime": "2024-08-04T17:38:49.000Z",
+        "fields": {
+            "City": [
+                "recTB6GAGDXqR2Jcn"
+            ],
+            "Email Id": "white.black@example.com",
+            "Contact Number": "+00 1234567890",
+            "Name": "White Black",
+            "Username": "wb123",
+            "Password": "WhiteBlack123",
+            "Longitude": [
+                -0.176894
+            ],
+            "Latitude": [
+                51.498356
+            ]
+}};
+
+prof = respExample.fields;
+
+    const handleLogin = async () => {
         //handle login logic
-        alert(`Login attempt with: ${userName} and ${password}`);
-        navigation.navigate("Profile");
+        setLoading(true);
+
+        try {
+          const response = await axios.get(BACKEND_URL + `userdetails/${userName}`);
+          alert("Received response. " + response.data.fields);
+          navigation.navigate("Profile", {profile: response.data.fields});
+        }
+        catch(error) {
+          let errorMsg = '';
+          if (error.response) {
+            if (error.response.status == 500) {
+              errorMsg = "Internal Server Error";
+            }
+            else if (error.response.status == 401) {
+              errorMsg = "Wrong password";
+            }
+            else if (error.response.status == 404) {
+              errorMsg = "Username not found";
+            }
+          }
+          alert(error.msg + "Error.msg");
+          alert(errorMsg + "errorMsg");
+          setError(error.msg);
+        }
+        finally {
+          setLoading(false);
+        }
+        
+        alert(`Login attempt with: ${prof.Username} and ${prof.Password}`);
+        navigation.navigate("Profile", {profile: prof});
     };
 
     return (
@@ -86,3 +141,5 @@ const background= "#080816";
 const primary= "#9da4dd";
 const secondary= "#7a2a5b";
 const accent= "#c14961";
+
+

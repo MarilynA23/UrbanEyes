@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import axios from "axios";
+
+const BACKEND_URL = '/';
 
 const SignUpPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -16,9 +19,36 @@ const SignUpPage = ({ navigation }) => {
   const [name, setName] = useState('');
   const [userName, setuserName] = useState('');
   const [contactNo, setcontactNo] = useState('');
+  const [city, setCity] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  let prof = null;
 
-  const handleSignUp = async () => {
+  const respExample = {
+            "id": "recwtMw0DwkPB2AaC",
+            "createdTime": "2024-08-04T17:38:49.000Z",
+            "fields": {
+                "City": [
+                    "recTB6GAGDXqR2Jcn"
+                ],
+                "Email Id": "white.black@example.com",
+                "Contact Number": "+00 1234567890",
+                "Name": "White Black",
+                "Username": "wb123",
+                "Password": "WhiteBlack123",
+                "Longitude": [
+                    -0.176894
+                ],
+                "Latitude": [
+                    51.498356
+                ]
+    }};
+
+    prof = respExample.fields;
+    alert(prof['Email Id'])
+
+
+const handleSignUp = async () => {
     setLoading(true);
     //handle sign up logic
     if (!name || !email || !password) {
@@ -27,39 +57,26 @@ const SignUpPage = ({ navigation }) => {
     } else if (password != confirmedpassword) {
       alert("Passwords don't match.");
       return;
-    }
-    else if (contactNo.charAt(0) != '+') {
+    } else if (contactNo.charAt(0) != '+') {
       alert('Enter country code with contact');
+      return;
+    } else if (!email.includes('@')) {
+      alert('Enter valid email');
+      return;
     }
 
     const requestBody = {
-      Username: 'abc123',
-      Name: 'Red White and Royal Blue',
-      Password: 'RedWRBlue123',
-      'Email Id': 'red.white.blue@yoooo.com',
-      'Contact Number': '+22 1234567890',
-      City: 'London',
+    "Username": userName,
+    "Name": name,
+    "Password": password,
+    "Email Id": email,
+    "Contact Number": contactNo,
+    "City": city
     };
+    
 
-    try {
-      console.log('Sending request to Backend:', requestBody);
-      const response = await axios.post('', requestBody);
-
-      console.log('Received response from API:', response.data);
-    } catch (error) {
-      let errorMsg = '';
-      if (error.response) {
-        errorMsg = `Error: ${error.response.status} - ${error.response.data}`;
-      } else if (error.request) {
-        errorMsg = 'No response received from the server';
-      } else {
-        errorMsg = `Request error: ${error.message}`;
-      }
-      console.log(errorMsg);
-    } finally {
-      setLoading(true);
-    }
-    alert('Signed up with:', email, password);
+    alert('Signed up with: ' + prof['Email Id']);
+    navigation.navigate("Profile", {profile: prof});
   };
 
   return (
@@ -87,6 +104,13 @@ const SignUpPage = ({ navigation }) => {
           onChangeText={setEmail}
           keyboardType="email-address"
           autoCapitalize="none"
+          placeholderTextColor={secondary}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Location (City Only)"
+          value={city}
+          onChangeText={setCity}
           placeholderTextColor={secondary}
         />
         <TextInput
