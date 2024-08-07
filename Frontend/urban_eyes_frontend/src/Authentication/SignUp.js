@@ -5,7 +5,7 @@ import authTheme from '../Themes/AuthTheme'; // Adjust the path according to you
 // Placeholder function to simulate checking if the email is in use
 const isEmailInUse = (email) => {
     const usedEmails = ['test@example.com', 'already@inuse.com']; // Simulate used emails
-    alert("PLACEHOLDER FUNCTION BEING USED FOR AUTHENTICATION");
+    //alert("PLACEHOLDER FUNCTION BEING USED FOR AUTHENTICATION");
     return usedEmails.includes(email);
 };
 

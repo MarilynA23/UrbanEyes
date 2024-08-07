@@ -17,7 +17,7 @@ const LoginPage = ({ navigation, onLoginSuccess }) => {
                 onLoginSuccess();
             }
         } else {
-            alert(`Login attempt with: ${userName} and ${password}`);
+            alert(`Incorrect username or password`);
         }
     };
 
@@ -51,7 +51,7 @@ const LoginPage = ({ navigation, onLoginSuccess }) => {
                     placeholderTextColor={authTheme.colors.tertiary}
                 />
                 <TouchableOpacity style={styles.forgotPassword} onPress={() => alert('Forgot password?')}>
-                    <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+                    { <Text style={styles.forgotPasswordText}>Forgot password?</Text>   /* Replace this too take you to a form to enter an email to get resent passwd link */}
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Log in</Text>

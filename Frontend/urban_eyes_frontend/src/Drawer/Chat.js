@@ -1,9 +1,9 @@
 // src/Tabs/Chat.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import appTheme from '../Themes/AppTheme';
 
-const ChatTab = () => {
+const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
 
@@ -21,7 +21,7 @@ const ChatTab = () => {
     );
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <FlatList
                 data={messages}
                 renderItem={renderMessage}
@@ -40,7 +40,7 @@ const ChatTab = () => {
                     <Text style={styles.sendButtonText}>Send</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     messageContainer: {
         marginBottom: 10,
         padding: 10,
-        backgroundColor: appTheme.colors.primary,
+        backgroundColor:"#601a3e",
         borderRadius: 5,
     },
     messageText: {
@@ -90,4 +90,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ChatTab;
+export default Chat;

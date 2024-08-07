@@ -2,8 +2,9 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, TextInput, Modal, Button, StyleSheet, Platform } from 'react-native';
 import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
+import authTheme from '../Themes/AuthTheme'; // Adjust the path according to your folder structure
 
-const MapTab = ({ markers, addMarker }) => {
+const Map = ({ markers, addMarker }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [currentCoordinate, setCurrentCoordinate] = useState(null);
     const [desc, setDescription] = useState('');
@@ -42,6 +43,14 @@ const MapTab = ({ markers, addMarker }) => {
                 style={{ flex: 1 }}
                 provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
                 onPress={handleMapPress}
+                initialRegion={
+                    {
+                    latitude: 51.4988,
+                    longitude: -0.1749,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
+                    }
+                }
             >
                 {markers.map((marker, index) => (
                     <Marker
@@ -62,7 +71,7 @@ const MapTab = ({ markers, addMarker }) => {
                     setError(''); // Clear the error message when closing the modal
                 }}>
                 <View style={styles.modal}>
-                    <Text>Report an Issue</Text>
+                    <Text style={styles.headingStyle}>Quick Report An Issue</Text>
                     <TextInput
                         placeholder='Enter Title'
                         value={title}
@@ -85,11 +94,12 @@ const MapTab = ({ markers, addMarker }) => {
                     />
                     {error ? <Text style={styles.errorText}>{error}</Text> : null}
                     <View style={styles.buttonContainer}>
-                        <Button title='Report' onPress={handleSubmitReport} />
                         <Button title='Cancel' onPress={() => {
-                            setModalVisible(false);
-                            setError(''); // Clear the error message when cancelling
-                        }} />
+                                setModalVisible(false);
+                                setError(''); // Clear the error message when cancelling
+                            }} />
+                        <Button title='Report' onPress={handleSubmitReport} />
+                        
                     </View>
                 </View>
             </Modal>
@@ -100,7 +110,7 @@ const MapTab = ({ markers, addMarker }) => {
 const styles = StyleSheet.create({
     modal: {
         margin: 20,
-        backgroundColor: 'white',
+        backgroundColor: '#080816',
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',
@@ -111,7 +121,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
+        marginTop : 250
     },
     input: {
         width: '100%',
@@ -120,6 +131,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
+        color : "white"
     },
     errorText: {
         color: 'red',
@@ -129,7 +141,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
+    },
+    headingStyle : {
+        color : authTheme.colors.primary,
+        fontSize : 18,
+        fontWeight : "bold",
+        padding : 15
     }
 });
-
-export default MapTab;
+export default Map;

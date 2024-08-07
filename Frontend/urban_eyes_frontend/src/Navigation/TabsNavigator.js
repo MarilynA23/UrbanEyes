@@ -4,9 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from 'react-native'; // Import Button from react-native
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation
-import TrackTab from '../Tabs/Track';
-import MapTab from '../Tabs/Map'; // Updated import path
-import ReportTab from '../Tabs/Report';
+import Track from '../Tabs/Track';
+import Map from '../Tabs/Map'; // Updated import path
+import Report from '../Tabs/Report';
 import appTheme from '../Themes/AppTheme'; // Ensure path to theme is correct
 
 const Tab = createBottomTabNavigator();
@@ -36,9 +36,10 @@ const TabsNavigator = () => {
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: appTheme.colors.primary,
-                tabBarInactiveTintColor: 'grey',
+                tabBarInactiveTintColor: '#9da4dd',
                 tabBarStyle: {
-                    display: 'flex'
+                    display: 'flex',
+                    backgroundColor : '#080816'
                 },
 
                 headerShown: false, // Hide top header
@@ -52,11 +53,11 @@ const TabsNavigator = () => {
                 )
             })}
         >
-            <Tab.Screen name="Report" component={ReportTab} />
+            <Tab.Screen name="Report" component={Report} />
             <Tab.Screen name="Map">
-                {() => <MapTab markers={markers} addMarker={addMarker} />}
+                {() => <Map markers={markers} addMarker={addMarker} />}
             </Tab.Screen>
-            <Tab.Screen name="Track" component={TrackTab} />
+            <Tab.Screen name="Track" component={Track} />
         </Tab.Navigator>
     );
 };

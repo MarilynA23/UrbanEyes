@@ -30,13 +30,13 @@ const ContactUsPage = () => {
           value={issue}
           onChangeText={setIssue}
           autoCapitalize="none"
-          placeholderTextColor={secondary}
+          placeholderTextColor='grey'
           />
           <Picker
         selectedValue={selectedValue}
         style={styles.picker}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-      >
+        onValueChange={(itemValue) => setSelectedValue(itemValue)}
+          >
         <Picker.Item style={styles.pickerItem} label="Faulty App Working" value="Faulty App Working" />
         <Picker.Item label="Mapping Issues" value="Mapping Issues" />
         <Picker.Item label="Reporting Issues" value="Reporting Issues" />
