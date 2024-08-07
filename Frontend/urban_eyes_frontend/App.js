@@ -22,7 +22,7 @@ const App = () => {
 
     return (
         <NavigationContainer>
-            {isLoggedIn ? <DrawerNavigator /> : <AuthStack screenProps={{ onLoginSuccess: handleLoginSuccess, onSignUpSuccess: handleSignUpSuccess }} />}
+            {isLoggedIn ? <DrawerNavigator setIsLoggedIn={setIsLoggedIn}/> : <AuthStack screenProps={{ onLoginSuccess: handleLoginSuccess, onSignUpSuccess: handleSignUpSuccess }} />}
         </NavigationContainer>
     );
 };

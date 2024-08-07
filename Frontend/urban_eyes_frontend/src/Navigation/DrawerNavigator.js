@@ -9,10 +9,34 @@ import Settings from '../Drawer/Settings';
 import Login from "../Authentication/Login";
 import Chat from "../Drawer/Chat";
 import appTheme from '../Themes/AppTheme';
-import LogoutTab from '../Authentication/Logout';
+import Logout from '../Authentication/Logout';
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigator = () => {
+  const DrawerNavigator = ({setIsLoggedIn}) => {
+    const navigation = useNavigation();
+
+    const handleLogout = () => {
+        Alert.alert(
+            "Confirm Logout",
+            "Are you sure you want to logout?",
+            [
+                { text: "Cancel" },
+                { 
+                    text: "OK", 
+                    onPress: () => {
+                        alert("You have been logged out.");
+                        setIsLoggedIn(false);
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
+    };
+
+
     return (
         <Drawer.Navigator initialRouteName="Home" screenOptions={{
           headerStyle: {
@@ -35,7 +59,12 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="Settings" component={Settings} />
             <Drawer.Screen name="Contact Us" component={ContactUsPage} />
             <Drawer.Screen name="About the App" component={About} />
-            <Drawer.Screen name="Logout" component={LogoutTab} />
+            {/* <Drawer.Screen name="Logout" component={Logout} /> */}
+            <Drawer.Screen name="Logout" component={() => null}
+                listeners={{ drawerItemPress: (e) => {
+                        e.preventDefault();
+                        handleLogout();
+                    }}}/>
         </Drawer.Navigator>
     );
 };
