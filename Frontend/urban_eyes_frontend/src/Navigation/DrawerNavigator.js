@@ -8,10 +8,22 @@ import Profile from '../Drawer/Profile';
 import Settings from '../Drawer/Settings';
 import Login from "../Authentication/Login";
 import Chat from "../Drawer/Chat";
+import EditProfile from '../Drawer/EditProfile';
 import appTheme from '../Themes/AppTheme';
 import Logout from '../Authentication/Logout';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack'; // Add this import
+
+const Stack = createStackNavigator(); // Add this
+
+// Create a stack navigator for Profile and EditProfile
+const ProfileStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="ProfileMain" component={Profile} />
+    <Stack.Screen name="EditProfile" component={EditProfile} />
+  </Stack.Navigator>
+);
 
 const Drawer = createDrawerNavigator();
 
@@ -54,7 +66,7 @@ const Drawer = createDrawerNavigator();
             drawerInactiveTintColor: appTheme.colors.Inactive, // Color of the inactive item text
           }}>
             <Drawer.Screen name="Home" component={TabsNavigator}/>
-            <Drawer.Screen name="Profile" component={Profile} />
+            <Drawer.Screen name="Profile" component={ProfileStack} />
             <Drawer.Screen name="Chat" component={Chat} />
             <Drawer.Screen name="Settings" component={Settings} />
             <Drawer.Screen name="Contact Us" component={ContactUsPage} />

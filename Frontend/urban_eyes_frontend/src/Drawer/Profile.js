@@ -9,8 +9,11 @@ import {
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
-const Profile = ({navigation, route}) => {
+const Profile = ({route}) => {
+
+  const navigation = useNavigation();
 
   //const {profile} = route.params;
   //alert(`prof is ${JSON.stringify(profile)}`)
