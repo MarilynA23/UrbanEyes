@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from 'react';
+// App.js
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthStack from './src/Navigation/AuthStack';
-import DrawerNavigator from './src/Navigation/DrawerNavigator';
+import RootNavigator from './src/Navigation/RootNavigator'; // Import RootNavigator
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        // Placeholder check for authentication status
-        const userIsLoggedIn = false; // Simulate authentication status
-        setIsLoggedIn(userIsLoggedIn);
-    }, []);
 
     const handleLoginSuccess = () => {
         setIsLoggedIn(true);
@@ -22,7 +16,7 @@ const App = () => {
 
     return (
         <NavigationContainer>
-            {isLoggedIn ? <DrawerNavigator setIsLoggedIn={setIsLoggedIn}/> : <AuthStack screenProps={{ onLoginSuccess: handleLoginSuccess, onSignUpSuccess: handleSignUpSuccess }} />}
+            <RootNavigator isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         </NavigationContainer>
     );
 };
