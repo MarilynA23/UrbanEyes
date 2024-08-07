@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'; // Import useNavigatio
 import TrackTab from '../Tabs/Track';
 import MapTab from '../Tabs/Map'; // Updated import path
 import ReportTab from '../Tabs/Report';
+import TestIssueNavigator from './TestIssueNavigator'; // Import the new TestIssueNavigator
 import appTheme from '../Themes/AppTheme'; // Ensure path to theme is correct
 
 const Tab = createBottomTabNavigator();
@@ -27,11 +28,13 @@ const TabsNavigator = () => {
                     let iconName;
 
                     if (route.name === 'Report') {
-                        iconName = focused ? 'alert' : 'alert-outline';
+                        iconName = focused ? 'warning' : 'warning-outline';
                     } else if (route.name === 'Track') {
-                        iconName = focused ? 'newspaper' : 'newspaper-outline';
+                        iconName = focused ? 'list' : 'list-outline';
                     } else if (route.name === 'Map') {
                         iconName = focused ? 'map' : 'map-outline';
+                    } else if (route.name === 'TestIssue') {
+                        iconName = focused ? 'list' : 'list-outline';
                     }
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
@@ -57,6 +60,7 @@ const TabsNavigator = () => {
                 {() => <MapTab markers={markers} addMarker={addMarker} />}
             </Tab.Screen>
             <Tab.Screen name="Track" component={TrackTab} />
+            <Tab.Screen name="TestIssue" component={TestIssueNavigator} options={{ title: 'Test Issue' }} />
         </Tab.Navigator>
     );
 };
