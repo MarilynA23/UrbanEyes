@@ -10,8 +10,8 @@ import requests
 #HTTP_500_NOT_FOUND unexpected errors
 
 #Signing up users change errors
-#Create a view to send Marilyn all the issues of a particular username
-#Create a view to send Marilyn all the issues of city where user is from
+#Create a view to send Marilyn all the issues of a particular username -- DONE
+#Create a view to send Marilyn all the issues of city where user is from -- DONE
 #Editing user details should be added using PATCH OR PUT (I will contact Nandita to change if I can't)
 #Create a single user details view -- DONE
 
@@ -50,8 +50,6 @@ class UserDetailsView(APIView):
 class SingleUser(APIView):
     def get(self, request, name):
         try:
-            # print(name)
-            #I HAVE TO EDIT IT
             user = AirtableService.get_particular_user_details(name)
             return Response(user, status=status.HTTP_200_OK)
         except requests.RequestException as e:
@@ -73,3 +71,11 @@ class CityIssue(APIView):
         except requests.RequestException as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+class UserDetailsUpdateView(APIView):
+    def patch(self, request, name):
+        try:
+            record_id = AirtableService.get_particular_user_id(name)
+            updated_user = AirtableService.update_user_details(record_id, request.data)
+            return Response(updated_user, status=status.HTTP_200_OK)
+        except requests.RequestException as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

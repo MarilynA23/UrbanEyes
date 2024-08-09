@@ -100,4 +100,13 @@ class AirtableService:
                 result.extend(AirtableService.get_user_issues(user['fields'].get('Username')))
         return result
     
-    
+    @staticmethod
+    def update_user_details(record_id, user_data):
+        city_name = user_data.get('City')
+        city_id = AirtableService.get_city_id(city_name)
+        if city_id:
+            user_data['City'] = [city_id]
+        url = f"{AirtableService.base_url}{settings.USER_DETAILS_TABLE}/{record_id}"
+        response = requests.patch(url, json={'fields': user_data}, headers=AirtableService.headers)
+        response.raise_for_status()
+        return response.json()
