@@ -6,7 +6,7 @@ const appTheme = {
         tertiary: 'grey',
         text: "#e4e6f6",
         background: "#0F2343",
-        Inactive : '#9da4dd'
+        inactive : '#9da4dd'
         // Add other colors as needed
     },
     fonts: {

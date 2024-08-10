@@ -10,9 +10,15 @@ import {
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+<<<<<<< HEAD
 import EditProfile from './EditProfile';
+=======
+import { useNavigation } from '@react-navigation/native';
+>>>>>>> 7ef3106032fb75e3af928ffeac8264c0ed8e9b0e
 
-const Profile = ({navigation, route}) => {
+const Profile = ({route}) => {
+
+  const navigation = useNavigation();
 
   // const {profile} = route.params;
   // alert(`prof is ${JSON.stringify(profile)}`)
