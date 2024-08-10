@@ -1,24 +1,92 @@
 import React, { useState } from 'react';
 import { View, Image, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import authTheme from '../Themes/AuthTheme';
+import { useNavigation } from '@react-navigation/native';
+
+const BACKEND_URL = '';
 
 const Login = ({ navigation, onLoginSuccess }) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    // const navigation = useNavigation();
 
-    const handleLogin = () => {
+    const respExample = {
+        "id": "recwtMw0DwkPB2AaC",
+        "createdTime": "2024-08-04T17:38:49.000Z",
+        "fields": {
+            "City": [
+                "recTB6GAGDXqR2Jcn"
+            ],
+            "Email Id": "white.black@example.com",
+            "Contact Number": "+00 1234567890",
+            "Name": "White Black",
+            "Username": "wb123",
+            "Password": "WhiteBlack123",
+            "Longitude": [
+                -0.176894
+            ],
+            "Latitude": [
+                51.498356
+            ]
+        }};
+
+    const handleLogin = async () => {
         // Placeholders:
-        const correctUserName = '';
-        const correctPassword = '';
+        // const correctUserName = '';
+        // const correctPassword = '';
 
-        if (userName === correctUserName && password === correctPassword) {
-            alert('Logged in successfully!');
-            if (onLoginSuccess) {
-                onLoginSuccess();
+        // if (userName === correctUserName && password === correctPassword) {
+        //     alert('Logged in successfully!');
+        //     if (onLoginSuccess) {
+        //         onLoginSuccess();
+        //     }
+        // } else {
+        //     alert(`Incorrect username or password`);
+        // }
+
+        try {
+            const response = await axios.get(BACKEND_URL + `user/${userName}`);
+            alert("Received response. " + response.data.fields);
+
+            // Navigate to home by sending the code.
+            // This idk how, need to check.
+            navigation.navigate("Home", {profile: response.data.fields});
+          }
+        catch(error) {
+            let errorMsg = '';
+            if (error.response) {
+              if (error.response.status == 500) {
+                errorMsg = "Internal Server Error";
+              }
+              else if (error.response.status == 401) {
+                errorMsg = "Wrong password";
+              }
+              else if (error.response.status == 404) {
+                errorMsg = "Username not found";
+              }
+              else {
+                if (error.response) {
+                    errorMsg = error.response.data.message;
+                }
+                else if (error.request) {
+                    errorMsg = error.request;
+                }
+                else {
+                    errorMsg = error.message;
+                }
+              }
             }
-        } else {
-            alert(`Incorrect username or password`);
+            alert(errorMsg + " errorMsg");
         }
+
+        alert(`Login attempt with: ${respExample.fields.Username} and ${respExample.fields.Password}`);
+
+          // again navigation: we need to see
+        if (onLoginSuccess) {
+            onLoginSuccess();
+        }
+        navigation.navigate("Home", {profile: respExample.fields});
+        
     };
 
     return (
