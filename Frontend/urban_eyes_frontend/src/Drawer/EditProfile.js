@@ -9,6 +9,21 @@ import {
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
+<<<<<<< HEAD
+
+const EditProfile = ({ navigation, route }) => {
+
+  // extracting details
+  const {profile} = route.params;
+  const [name, setName] = useState(profile.Name);
+  const [email, setEmail] = useState(profile['Email Id']);
+  const [city, setCity] = useState(profile.City[0]);
+  const [username, setUsername] = useState(profile.Username);
+  const [password, setPassword] = useState(profile.Password);
+  const [contact, setContact] = useState(profile['Contact Number']);
+
+  const makeChanges = async () => {
+=======
 import { useNavigation } from '@react-navigation/native';
 
 const EditProfile = ({ route }) => {
@@ -36,6 +51,7 @@ const EditProfile = ({ route }) => {
   const makeChanges = async () => {
     // navigation.navigate("Profile", {profile: newprof});
     navigation.navigate("ProfileMain");
+>>>>>>> 7ef3106032fb75e3af928ffeac8264c0ed8e9b0e
 
     const newprof = 
       {
@@ -49,6 +65,20 @@ const EditProfile = ({ route }) => {
             "Password": password
       }
 
+<<<<<<< HEAD
+    try {
+      const response = await axios.put('', {
+
+      });
+    }
+    catch(error) {
+      alert(error.response.message)
+    }
+    finally {
+      navigation.navigate("Profile", {profile: newprof});
+    }
+    
+=======
     // try {
     //   const response = await axios.put('', {
 
@@ -61,6 +91,7 @@ const EditProfile = ({ route }) => {
       
     // }
 
+>>>>>>> 7ef3106032fb75e3af928ffeac8264c0ed8e9b0e
   }
 
   return (

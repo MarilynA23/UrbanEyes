@@ -5,31 +5,43 @@ import {
   TextInput,
   StyleSheet,
   Button,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+<<<<<<< HEAD
+import EditProfile from './EditProfile';
+=======
 import { useNavigation } from '@react-navigation/native';
+>>>>>>> 7ef3106032fb75e3af928ffeac8264c0ed8e9b0e
 
 const Profile = ({route}) => {
 
   const navigation = useNavigation();
 
-  //const {profile} = route.params;
-  //alert(`prof is ${JSON.stringify(profile)}`)
-  // extracting details
+  // const {profile} = route.params;
+  // alert(`prof is ${JSON.stringify(profile)}`)
+  // // extracting details
+  // const name = profile.Name;
+  // const email = profile['Email Id'];
+  // const city = profile.City;
+  // const contact = profile['Contact Number'];
+  // const username = profile.Username;
+  // const password = profile.Password;
   const name = "Jake Smith"
   const email = "jake123@gmail.com"
   const city = "London"
   const username = "Jake"
   const password = "Jake1234"
+  const contact = "+4401234567890"
 
   return (
     <>
       <View style={styles.titlecontainer}>
-        <Text style={styles.title}> Your Profile </Text>
+        <Text style={styles.title}> Profile </Text>
       </View>
-      <View style={{ flex: 0.75, backgroundColor: 'black' }}>
+      <View style={{ flex: 1, backgroundColor: 'black' }}>
         <View
           style={styles.fieldcontainer}>
           <View style={{ flex: 0.2 }}>
@@ -68,6 +80,16 @@ const Profile = ({route}) => {
         <View
           style={styles.fieldcontainer}>
           <View style={{ flex: 0.2 }}>
+            <MaterialCommunityIcon name="phone" size={30} color={secondary} />
+          </View>
+          <View style={{ flex: 0.75 }}>
+            <Text style={{ color: "#e4e6f6"}}> Contact Number </Text>
+            <Text style={{ color: primary}}> {contact} </Text>
+          </View>
+        </View>
+        <View
+          style={styles.fieldcontainer}>
+          <View style={{ flex: 0.2 }}>
             <MaterialCommunityIcon name="card-account-details" size={30} color={secondary} />
           </View>
           <View style={{ flex: 0.75 }}>
@@ -95,8 +117,20 @@ const Profile = ({route}) => {
     flexDirection: 'row',
             }
           }>
+          <Button title="Edit Profile" color={"#c14961"} style= {styles.button} onPress={() => 
+            navigation.navigate("EditProfile", {EditProfile})} />
+          </View>
 
-          <Button title="Edit Profile" color={"#c14961"} style= {styles.button} onPress={() => navigation.navigate("EditProfile")} />
+          <View
+          style={
+            {
+              flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+            }
+          }>
+
           </View>
       </View>
     </>
@@ -109,11 +143,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     color: '#9da4dd',
-    alignItems: 'center',
-    fontWeight : "bold"
+    alignItems: 'center'
   },
   titlecontainer: {
-    flex: 0.25,
+    flex: 0.15,
     backgroundColor: '#080816',
     alignItems: 'center',
     justifyContent: 'center',
