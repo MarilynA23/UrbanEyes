@@ -82,19 +82,16 @@ class AirtableService:
         for issue in issues:
             if issue['fields'].get('Username') == [user_id]:
                 result.append(issue)
-        print(result)
         return result
     
     @staticmethod
     def get_issue_in_city(username):
         user_details = AirtableService.get_particular_user_details(username)
         city_id = user_details['City']
-        print(city_id)
         response = requests.get(AirtableService.base_url+f'{settings.USER_DETAILS_TABLE}', headers=AirtableService.headers)
         response.raise_for_status()
         users = response.json().get('records', [])
         result = []
-        print(users)
         for user in users:
             if user['fields'].get('City') == city_id:
                 result.extend(AirtableService.get_user_issues(user['fields'].get('Username')))
