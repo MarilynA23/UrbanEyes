@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import authTheme from '../Themes/AuthTheme';
 
-const LoginPage = ({ navigation, onLoginSuccess }) => {
+const Login = ({ navigation, onLoginSuccess }) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
@@ -135,4 +135,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginPage;
+export default Login;
