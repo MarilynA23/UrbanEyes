@@ -50,8 +50,8 @@ const Login = ({ navigation, onLoginSuccess }) => {
                     secureTextEntry
                     placeholderTextColor={authTheme.colors.tertiary}
                 />
-                <TouchableOpacity style={styles.forgotPassword} onPress={() => alert('Forgot password?')}>
-                    { <Text style={styles.forgotPasswordText}>Forgot password?</Text>   /* Replace this too take you to a form to enter an email to get resent passwd link */}
+                <TouchableOpacity style={styles.forgotPassword} onPress={() => alert('Forgot password?')}> {/*navigation.native to forgot password */}
+                     <Text style={styles.forgotPasswordText}>Forgot password?</Text>  { /* Replace this too take you to a form to enter an email to get resent passwd link */}
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Log in</Text>
