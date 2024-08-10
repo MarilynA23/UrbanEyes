@@ -11,45 +11,35 @@ import Settings from '../Drawer/Settings';
 import Chat from "../Drawer/Chat";
 import EditProfile from '../Drawer/EditProfile';
 import appTheme from '../Themes/AppTheme';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Drawer = createDrawerNavigator();
 
 const LogoutHandler = ({ setIsLoggedIn }) => {
     const navigation = useNavigation();
 
-    React.useEffect(() => {
-        const showAlert = () => {
-            Alert.alert(
-                "Confirm Logout",
-                "Are you sure you want to logout?",
-                [
-                    {
-                        text: "Cancel",
-                        onPress: () => {
-                            // Navigate back to the previous screen
-                            navigation.goBack();
-                        }
-                    },
-                    {
-                        text: "OK",
-                        onPress: () => {
-                            Alert.alert("You have been logged out.");
-                            setIsLoggedIn(false);
-                        }
+    const logoutalert = () => {
+        Alert.alert(
+            "Confirm Logout",
+            "Are you sure you want to logout?",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => {
+                        // Navigate back to the previous screen
+                        navigation.goBack();
                     }
-                ],
-                { cancelable: false }
-            );
-        };
+                },
+                {
+                    text: "OK",
+                    onPress: () => {
+                        Alert.alert("You have been logged out.");
+                        setIsLoggedIn(false);
+                    }
+                }
+            ])}
 
-        // Show the alert when the component is mounted
-        showAlert();
-
-        // Cleanup function to ensure the alert is only shown when intended
-        return () => {
-            // Any cleanup logic if needed
-        };
-    }, [navigation, setIsLoggedIn]);
+    useFocusEffect(logoutalert)
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import authTheme from '../Themes/AuthTheme'; // Adjust the path according to your folder structure
+import axios from 'axios';
+
+const BACKEND_URL = '';
 
 // Placeholder function to simulate checking if the email is in use
 const isEmailInUse = (email) => {
@@ -17,7 +20,27 @@ const SignUpPage = ({ navigation, onSignUpSuccess }) => {
     const [userName, setUserName] = useState('');
     const [contactNo, setContactNo] = useState('');
 
-    const handleSignUp = () => {
+    const respExample = {
+        "id": "recwtMw0DwkPB2AaC",
+        "createdTime": "2024-08-04T17:38:49.000Z",
+        "fields": {
+            "City": [
+                "recTB6GAGDXqR2Jcn"
+            ],
+            "Email Id": "white.black@example.com",
+            "Contact Number": "+00 1234567890",
+            "Name": "White Black",
+            "Username": "wb123",
+            "Password": "WhiteBlack123",
+            "Longitude": [
+                -0.176894
+            ],
+            "Latitude": [
+                51.498356
+            ]
+}};
+
+    const handleSignUp = async () => {
         if (!name || !email || !password) {
             alert("Please fill all details.");
             return;
@@ -26,16 +49,75 @@ const SignUpPage = ({ navigation, onSignUpSuccess }) => {
             alert("Passwords don't match.");
             return;
         }
+        if (contactNo.charAt(0) != '+') {
+            alert('Enter country code with contact');
+            return;
+        }
+        if (!email.includes('@')) {
+            alert('Enter valid email');
+            return;
+        }
         if (isEmailInUse(email)) {
             alert("Email is already in use.");
             return;
         }
+
+        const requestBody = {
+            "Username": userName,
+            "Name": name,
+            "Password": password,
+            "Email Id": email,
+            "Contact Number": contactNo,
+            "City": city
+        };
+
+        try {
+
+            const response = axios.put(BACKEND_URL + 'userdetails/', requestBody);
+            alert("Received response. " + response.data.fields);
+            // Navigate to home by sending the code.
+            // This idk how, need to check.
+            navigation.navigate("Home", {profile: response.data.fields});
+
+        }
+        catch(error) {
+            let errorMsg = '';
+            if (error.response) {
+              if (error.response.status == 500) {
+                errorMsg = "Internal Server Error";
+              }
+              else if (error.response.status == 406) {
+                errorMsg = "User already exists.";
+              }
+            //   else if (error.response.status == 404) {
+            //     errorMsg = "Username not found";
+            //   }
+            // need a status for maybe email diff but same username which we don't want either?
+            // so diff user but same username
+              else {
+                if (error.response) {
+                    errorMsg = error.response.data.message;
+                }
+                else if (error.request) {
+                    errorMsg = error.request;
+                }
+                else {
+                    errorMsg = error.message;
+                }
+              }
+            }
+            alert(errorMsg + " errorMsg");
+        }
+
+        alert(`SignIn attempt with: ${respExample.fields.Username} and ${respExample.fields.Password}`);
 
         // Simulate successful sign-up
         alert('Signed up successfully!');
         if (onSignUpSuccess) {
             onSignUpSuccess();
         }
+
+        navigation.navigate("Home", {profile: respExample.fields});
     };
 
     return (
