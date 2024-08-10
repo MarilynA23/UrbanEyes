@@ -16,7 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .views import IssueListView, UserDetailsView, SingleUser, SingleUserIssue, CityIssue, UserDetailsUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('issues/', IssueListView.as_view(), name='issue-list'),
+    path('userdetails/', UserDetailsView.as_view(), name='user-details'),
+    path('user/<str:name>', SingleUser.as_view(), name='single-user'),
+    path('userissue/<str:name>', SingleUserIssue.as_view(), name='single-user-issue'),
+    path('cityissue/<str:name>', CityIssue.as_view(), name='city-issue'),
+    path('updateuserdetails/<str:name>', UserDetailsUpdateView.as_view(), name='user-details-update')
 ]
