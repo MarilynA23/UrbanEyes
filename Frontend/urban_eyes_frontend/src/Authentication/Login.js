@@ -46,11 +46,11 @@ const Login = ({ navigation, onLoginSuccess }) => {
 
         try {
             const response = await axios.get(BACKEND_URL + `user/${userName}`);
-            alert("Received response. " + response.data.fields);
+            alert("Received response. " + response.data);
 
             // Navigate to home by sending the code.
             // This idk how, need to check.
-            navigation.navigate("Home", {profile: response.data.fields});
+            navigation.navigate("Home", {profile: response.data});
           }
         catch(error) {
             let errorMsg = '';
