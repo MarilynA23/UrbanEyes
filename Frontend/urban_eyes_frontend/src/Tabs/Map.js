@@ -1,41 +1,24 @@
 // src/Tabs/Map.js
 import React, { useState, useCallback } from 'react';
-import { View, Text, TextInput, Modal, Button, StyleSheet, Platform } from 'react-native';
+import { View, Text, TextInput, Modal, Button, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native';
 import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
 import authTheme from '../Themes/AuthTheme'; // Adjust the path according to your folder structure
+import { useNavigation } from '@react-navigation/native';
 
-const Map = ({ markers, addMarker }) => {
-    const [modalVisible, setModalVisible] = useState(false);
+const Map = ({ markers, addMarker}) => {
     const [currentCoordinate, setCurrentCoordinate] = useState(null);
-    const [desc, setDescription] = useState('');
-    const [title, setTitle] = useState('');
-    const [addr, setAddr] = useState('');
     const [error, setError] = useState('');
+    const navigation = useNavigation()
 
     const handleMapPress = useCallback((event) => {
         const { coordinate } = event.nativeEvent;
         setCurrentCoordinate(coordinate);
-        setModalVisible(true);
+        //setModalVisible(true);
         setError(''); // Clear any previous errors
+        navigation.navigate("Report", {currCoordinate:currentCoordinate, addMarker:addMarker,setError : setError})
     }, []);
 
-    const handleSubmitReport = useCallback(() => {
-        if (!title.trim()) {
-            setError('Please enter a title for the report.');
-            return;
-        }
-        if (!desc.trim()) {
-            setError('Please enter a description for the report.');
-            return;
-        }
-
-        addMarker({ coordinate: currentCoordinate, title: title, description: desc });
-        setTitle('');
-        setAddr('');
-        setDescription('');
-        setModalVisible(false);
-        setError(''); // Clear the error message
-    }, [currentCoordinate, title, desc, addMarker]);
+    
 
     return (
         <View style={{ flex: 1 }}>
@@ -61,48 +44,6 @@ const Map = ({ markers, addMarker }) => {
                     />
                 ))}
             </MapView>
-
-            <Modal
-                animationType='slide'
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(false);
-                    setError(''); // Clear the error message when closing the modal
-                }}>
-                <View style={styles.modal}>
-                    <Text style={styles.headingStyle}>Quick Report An Issue</Text>
-                    <TextInput
-                        placeholder='Enter Title'
-                        value={title}
-                        onChangeText={setTitle}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        placeholder='Enter Address'
-                        value={addr}
-                        onChangeText={setAddr}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        placeholder='Describe The Issue'
-                        value={desc}
-                        onChangeText={setDescription}
-                        multiline={true}
-                        numberOfLines={4}
-                        style={styles.input}
-                    />
-                    {error ? <Text style={styles.errorText}>{error}</Text> : null}
-                    <View style={styles.buttonContainer}>
-                        <Button title='Cancel' onPress={() => {
-                                setModalVisible(false);
-                                setError(''); // Clear the error message when cancelling
-                            }} />
-                        <Button title='Report' onPress={handleSubmitReport} />
-                        
-                    </View>
-                </View>
-            </Modal>
         </View>
     );
 };
@@ -147,6 +88,63 @@ const styles = StyleSheet.create({
         fontSize : 18,
         fontWeight : "bold",
         padding : 15
-    }
+    },
+    contentContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#080816'
+    },
+    header: {
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    title: {
+        fontSize: 30,
+        color: authTheme.colors.primary,
+    },
+    formContainer: {
+        width: '100%',
+    },
+    input: {
+        width: '100%',
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 25,
+        marginBottom: 15,
+        paddingHorizontal: 15,
+        backgroundColor: '#fff',
+        color: authTheme.colors.background,
+        fontWeight: 'bold',
+        backgroundColor :"grey",
+        placeholderTextColor:"black"
+
+
+    },
+    button: {
+        backgroundColor: authTheme.colors.primary,
+        borderRadius: 25,
+        paddingVertical: 15,
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    buttonText: {
+        color: "black",
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    footerText: {
+        color: authTheme.colors.text,
+        marginRight: 5,
+    },
+    signInText: {
+        color: authTheme.colors.primary,
+    },
 });
 export default Map;

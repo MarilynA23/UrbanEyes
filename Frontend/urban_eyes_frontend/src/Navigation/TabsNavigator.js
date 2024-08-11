@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { Button } from 'react-native'; // Import Button from react-native
+import { Button, Alert } from 'react-native'; // Import Button from react-native
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation
 import Track from '../Tabs/Track';
 import Map from '../Tabs/Map'; // Updated import path
@@ -53,9 +53,17 @@ const TabsNavigator = () => {
                 )
             })}
         >
-            <Tab.Screen name="Report" component={Report} />
+            <Tab.Screen name="Report" component={Report}listeners={{
+                    tabPress: e => {
+                        e.preventDefault();
+                        Alert.alert(
+                            "Click on a location on the map to report an issue there"
+                        );
+                        navigation.navigate("Map")
+                    },
+                }}/>
             <Tab.Screen name="Map">
-                {() => <Map markers={markers} addMarker={addMarker} />}
+                {() => <Map markers={markers} addMarker={addMarker}/>}
             </Tab.Screen>
             <Tab.Screen name="Track" component={Track} />
         </Tab.Navigator>

@@ -96,7 +96,7 @@ const Login = ({ navigation, onLoginSuccess }) => {
             </View>
             <View style={styles.imageContainer}>
                 <Image
-                    source={require('../../assets/logo.png')} // Replace with the path to your image file
+                    source={require('../../assets/logo.png')} 
                     style={styles.logo}
                 />
             </View>
@@ -118,8 +118,8 @@ const Login = ({ navigation, onLoginSuccess }) => {
                     secureTextEntry
                     placeholderTextColor={authTheme.colors.tertiary}
                 />
-                <TouchableOpacity style={styles.forgotPassword} onPress={() => alert('Forgot password?')}> {/*navigation.native to forgot password */}
-                     <Text style={styles.forgotPasswordText}>Forgot password?</Text>  { /* Replace this too take you to a form to enter an email to get resent passwd link */}
+                <TouchableOpacity style={styles.forgotPassword} onPress={() => alert('Forgot password?')}> 
+                     <Text style={styles.forgotPasswordText}>Forgot password?</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Log in</Text>

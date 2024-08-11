@@ -10,6 +10,7 @@ import Profile from '../Drawer/Profile';
 import Settings from '../Drawer/Settings';
 import Chat from "../Drawer/Chat";
 import EditProfile from '../Drawer/EditProfile';
+import Report from '../Tabs/Report';
 import appTheme from '../Themes/AppTheme';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -71,6 +72,7 @@ const DrawerNavigator = ({ setIsLoggedIn }) => {
             <Drawer.Screen name="Settings" component={Settings} />
             <Drawer.Screen name="Contact Us" component={ContactUsPage} />
             <Drawer.Screen name="About the App" component={About} />
+            <Drawer.Screen name="Rep" component={Report} />
             <Drawer.Screen
                 name="Logout"
                 children={() => <LogoutHandler setIsLoggedIn={setIsLoggedIn} />}
