@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './src/Navigation/RootNavigator'; // Import RootNavigator
+import { UserProvider } from './src/UserContext'; // Import UserProvider
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,9 +16,11 @@ const App = () => {
     };
 
     return (
-        <NavigationContainer>
-            <RootNavigator isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-        </NavigationContainer>
+        <UserProvider>
+            <NavigationContainer>
+                <RootNavigator isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            </NavigationContainer>
+        </UserProvider>
     );
 };
 

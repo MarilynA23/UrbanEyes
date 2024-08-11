@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import authTheme from '../Themes/AuthTheme'; // Adjust the path according to your folder structure
+import authTheme from '../Themes/AuthTheme';
+import { useUser } from '../UserContext';
 
 // Placeholder function to simulate checking if the email is in use
 const isEmailInUse = (email) => {
@@ -10,6 +11,8 @@ const isEmailInUse = (email) => {
 };
 
 const SignUpPage = ({ navigation, onSignUpSuccess }) => {
+    const { setUser } = useUser(); // Destructure setUser from context
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -32,6 +35,16 @@ const SignUpPage = ({ navigation, onSignUpSuccess }) => {
         }
 
         // Simulate successful sign-up
+        const newUser = {
+            name,
+            email,
+            city: '', // Or set a default value if needed
+            username: userName,
+            password,
+            contact: contactNo,
+        };
+
+        setUser(newUser); // Update the context with new user data
         alert('Signed up successfully!');
         if (onSignUpSuccess) {
             onSignUpSuccess();

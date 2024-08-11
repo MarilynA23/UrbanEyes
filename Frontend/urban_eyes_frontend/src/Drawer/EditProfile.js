@@ -1,230 +1,147 @@
+// EditProfile.js
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Button,
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    Button,
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { useUser } from '../UserContext'; // Import useUser hook
 
-const EditProfile = ({ route }) => {
-
+const EditProfile = () => {
     const navigation = useNavigation();
+    const { user, updateUser } = useUser(); // Destructure user and setUser from context
 
-  // extracting details
-//   const {profile} = route.params;
+    const [name, setName] = useState(user.name);
+    const [email, setEmail] = useState(user.email);
+    const [city, setCity] = useState(user.city);
+    const [username, setUsername] = useState(user.username);
+    const [password, setPassword] = useState(user.password);
+    const [contact, setContact] = useState(user.contact);
 
-  alert("Inside edit profile");
-//   const [name, setName] = useState(profile.Name);
-//   const [email, setEmail] = useState(profile['Email Id']);
-//   const [city, setCity] = useState(profile.City[0]);
-//   const [username, setUsername] = useState(profile.Username);
-//   const [password, setPassword] = useState(profile.Password);
-//   const [contact, setContact] = useState(profile['Contact Number']);
+    const makeChanges = () => {
+        const updatedUser = {
+            name,
+            email,
+            city,
+            username,
+            password,
+            contact,
+        };
 
-  const [name, setName] = useState("Jake Smith")
-  const [email, setEmail] = useState("jake123@gmail.com")
-  const [city, setCity] = useState("London")
-  const [username, setUsername] = "Jake"
-  const [password, setPassword] = "Jake1234"
-  const [contact, setContact] = useState('+9900000011');
+        updateUser(updatedUser);
+        navigation.navigate("Profile");
+    };
 
-  const makeChanges = async () => {
-    // navigation.navigate("Profile", {profile: newprof});
-    navigation.navigate("ProfileMain");
+    return (
+        <>
+            <View style={styles.titlecontainer}>
+                <Text style={styles.title}>Edit Profile</Text>
+            </View>
+            <View style={{ flex: 0.75, backgroundColor: 'black' }}>
+                <ProfileInput
+                    icon="person"
+                    label="Name"
+                    value={name}
+                    onChangeText={setName}
+                />
+                <ProfileInput
+                    icon="mail"
+                    label="Email ID"
+                    value={email}
+                    onChangeText={setEmail}
+                />
+                <ProfileInput
+                    icon="location-pin"
+                    label="Location (City)"
+                    value={city}
+                    onChangeText={setCity}
+                />
+                <ProfileInput
+                    icon="phone"
+                    label="Contact Number"
+                    value={contact}
+                    onChangeText={setContact}
+                />
+                <ProfileInput
+                    icon="person"
+                    label="Username"
+                    value={username}
+                    onChangeText={setUsername}
+                />
+                <ProfileInput
+                    icon="remove-red-eye"
+                    label="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                />
 
-    const newprof = 
-      {
-            "City": [
-                city
-            ],
-            "Email Id": email,
-            "Contact Number": contact,
-            "Name": name,
-            "Username": username,
-            "Password": password
-      }
-
-    // try {
-    //   const response = await axios.put('', {
-
-    //   });
-    // }
-    // catch(error) {
-    //   alert(error.response.message)
-    // }
-    // finally {
-      
-    // }
-
-  }
-
-  return (
-    <>
-      <View style={styles.titlecontainer}>
-        <Text style={styles.title}>Edit Profile </Text>
-      </View>
-      <View style={{ flex: 0.75, backgroundColor: 'black' }}>
-        <View
-          style={styles.fieldcontainer}>
-          <View style={{ flex: 0.2 }}>
-            <MaterialIcon name="person" size={30} color={secondary} />
-          </View>
-          <View
-            style={{
-              flex: 0.75,
-              flexDirection: 'column',
-            }}>
-            <Text style={styles.header}> Name: </Text>
-            <TextInput
-          style={styles.input}
-          placeholder={name}
-          value={name}
-          onChangeText={setName}
-          autoCapitalize="none"
-          placeholderTextColor={secondary}
-          />
-          </View>
-        </View>
-
-        <View
-          style={styles.fieldcontainer}>
-          <View style={{ flex: 0.2}}>
-            <MaterialIcon name="mail" size={30} color={secondary} />
-          </View>
-          <View style={{ flex: 0.75 }}>
-            <Text style={styles.header}> Email ID: </Text>
-            <TextInput
-          style={styles.input}
-          placeholder={email}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          placeholderTextColor={secondary}
-          />
-          </View>
-        </View>
-        <View
-          style={styles.fieldcontainer}>
-          <View style={{ flex: 0.2}}>
-            <MaterialIcon name="location-pin" size={30} color={secondary} />
-          </View>
-          <View style={{ flex: 0.75 }}>
-            <Text style={styles.header}> Location (City): </Text>
-            <TextInput
-          style={styles.input}
-          placeholder={city}
-          value={city}
-          onChangeText={setCity}
-          autoCapitalize="none"
-          placeholderTextColor={secondary}
-          />
-          </View>
-        </View>
-
-        <View
-          style={styles.fieldcontainer}>
-          <View style={{ flex: 0.2 }}>
-            <MaterialCommunityIcon name="phone" size={30} color={secondary} />
-          </View>
-          <View style={{ flex: 0.75 }}>
-            <Text style={styles.header}> Contact Number: </Text>
-            <TextInput
-          style={styles.input}
-          placeholder={contact}
-          value={contact}
-          onChangeText={setContact}
-          autoCapitalize="none"
-          placeholderTextColor={secondary}
-          />
-          </View>
-        </View>
-
-        <View
-          style={styles.fieldcontainer}>
-          <View style={{ flex: 0.2 }}>
-            <MaterialCommunityIcon name="card-account-details" size={30} color={secondary} />
-          </View>
-          <View style={{ flex: 0.75 }}>
-            <Text style={styles.header}> User Name: </Text>
-            <TextInput
-          style={styles.input}
-          placeholder={username}
-          value={username}
-          onChangeText={setUsername}
-          autoCapitalize="none"
-          placeholderTextColor={secondary}
-          />
-          </View>
-        </View>
-        <View
-          style={styles.fieldcontainer}>
-          <View style={{ flex: 0.2 }}>
-            <MaterialIcon name="remove-red-eye" size={30} color={secondary} />
-          </View>
-          <View style={{ flex: 0.75 }}>
-            <Text style={styles.header}> Password: </Text>
-            <TextInput
-          style={styles.input}
-          placeholder={password}
-          value={password}
-          onChangeText={setPassword}
-          autoCapitalize="none"
-          placeholderTextColor={secondary}
-          />
-          </View>
-        </View>
-
-        <View
-          style={
-            {
-              flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-            }
-          }>
-
-          <Button title="Confirm Changes" color={"#c14961"} style= {styles.button} onPress={makeChanges}/>
-
-          </View>
-      </View>
-    </>
-  );
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title="Confirm Changes"
+                        color={"#c14961"}
+                        style={styles.button}
+                        onPress={makeChanges}
+                    />
+                </View>
+            </View>
+        </>
+    );
 };
 
-export default EditProfile;
+const ProfileInput = ({ icon, label, value, onChangeText }) => (
+    <View style={styles.fieldcontainer}>
+        <View style={{ flex: 0.2 }}>
+            <MaterialIcon name={icon} size={30} color={styles.secondary.color} />
+        </View>
+        <View style={{ flex: 0.75 }}>
+            <Text style={styles.header}>{label}:</Text>
+            <TextInput
+                style={styles.input}
+                value={value}
+                onChangeText={onChangeText}
+                autoCapitalize="none"
+                placeholderTextColor={styles.secondary.color}
+            />
+        </View>
+    </View>
+);
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 28,
-    color: '#9da4dd',
-    alignItems: 'center'
-  },
-  titlecontainer: {
-    flex: 0.25,
-    backgroundColor: '#080816',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fieldcontainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginLeft: "5px"
-  },
-  button: {
+    title: {
+        fontSize: 28,
+        color: '#9da4dd',
+        alignItems: 'center',
+    },
+    titlecontainer: {
+        flex: 0.25,
+        backgroundColor: '#080816',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    fieldcontainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginLeft: 5,
+    },
+    button: {
         backgroundColor: '#c14961',
         padding: 10,
         borderRadius: 5,
         marginTop: 30,
         marginBottom: 10,
+    },
+    buttonContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
     },
     input: {
         width: '100%',
@@ -233,14 +150,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10,
         paddingHorizontal: 10,
-        color: "#e4e6f6"
+        color: "#e4e6f6",
     },
-    header: 
-      { color: "#e4e6f6", marginBottom: "5px"}
+    header: {
+        color: "#e4e6f6",
+        marginBottom: 5,
+    },
+    secondary: {
+        color: "#7a2a5b",
+    },
 });
 
-const text= "#e4e6f6";
-const background= "#080816";
-const primary= "#9da4dd";
-const secondary= "#7a2a5b";
-const accent= "#c14961";
+export default EditProfile;

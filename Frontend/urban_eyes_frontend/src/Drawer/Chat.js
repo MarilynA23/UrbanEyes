@@ -5,9 +5,9 @@ import appTheme from '../Themes/AppTheme';
 
 const Chat = () => {
     const [messages, setMessages] = useState([
-        { id: '1', text: 'Hey, isn\'t this such a cool app?', user: 'Marilyn', timestamp: '9:19', profilePic: require('../../assets/icon.png') },
-        { id: '2', text: 'Innit! Finally all those potholes will be gone!', user: 'Nehal', timestamp: '9:26', profilePic: require('../../assets/icon.png') },
-        { id: '3', text: 'Hoorayy', user: 'Dhruv', timestamp: '9:27', profilePic: require('../../assets/icon.png') }
+        { id: '1', text: 'Hey, isn\'t this such a cool app?', user: 'Marilyn', timestamp: '9:19', profilePic: require('../../assets/generic_user.png') },
+        { id: '2', text: 'Innit! Finally all those potholes will be gone!', user: 'Nehal', timestamp: '9:26', profilePic: require('../../assets/generic_user.png') },
+        { id: '3', text: 'Hoorayy', user: 'Dhruv', timestamp: '9:27', profilePic: require('../../assets/generic_user.png') }
     ]);
     const [newMessage, setNewMessage] = useState('');
     const flatListRef = useRef(null);

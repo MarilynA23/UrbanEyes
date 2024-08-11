@@ -9,7 +9,7 @@ import About from '../Drawer/About';
 import Profile from '../Drawer/Profile';
 import Settings from '../Drawer/Settings';
 import Chat from "../Drawer/Chat";
-import EditProfile from '../Drawer/EditProfile';
+import ProfileStackNavigator from './ProfileStackNavigator'; // Import the stack navigator
 import appTheme from '../Themes/AppTheme';
 
 const Drawer = createDrawerNavigator();
@@ -76,7 +76,7 @@ const DrawerNavigator = ({ setIsLoggedIn }) => {
             drawerInactiveTintColor: appTheme.colors.secondary, // Color of the inactive item text
         }}>
             <Drawer.Screen name="Home" component={TabsNavigator} />
-            <Drawer.Screen name="Profile" component={Profile} />
+            <Drawer.Screen name="Profile" component={ProfileStackNavigator}/>
             <Drawer.Screen name="Chat" component={Chat} />
             <Drawer.Screen name="Settings" component={Settings} />
             <Drawer.Screen name="Contact Us" component={ContactUsPage} />
