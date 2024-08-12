@@ -17,9 +17,7 @@ class AirtableService:
     @staticmethod
     def create_issue(issue_data):
         user_name = issue_data.get('Username')
-        # print(user_name)
         user_id = AirtableService.get_particular_user_id(user_name)
-        # print(city_id)
         if user_id:
             issue_data['Username'] = [user_id]
         response = requests.post(AirtableService.base_url+f'{settings.AIRTABLE_TABLE_NAME}', json={'fields': issue_data}, headers=AirtableService.headers)
@@ -98,12 +96,23 @@ class AirtableService:
         return result
     
     @staticmethod
-    def update_user_details(record_id, user_data):
+    def update_user_details(username, user_data):
         city_name = user_data.get('City')
         city_id = AirtableService.get_city_id(city_name)
         if city_id:
             user_data['City'] = [city_id]
-        url = f"{AirtableService.base_url}{settings.USER_DETAILS_TABLE}/{record_id}"
+        url = f"{AirtableService.base_url}{settings.USER_DETAILS_TABLE}/{username}"
         response = requests.patch(url, json={'fields': user_data}, headers=AirtableService.headers)
         response.raise_for_status()
         return response.json()
+    
+    def get_city_name(username):
+        user_data = AirtableService.get_particular_user_details(username)
+        city_id = user_data['City'][0]
+        response = requests.get(AirtableService.base_url+f'{settings.CITIES_TABLE}', headers=AirtableService.headers)
+        response.raise_for_status()
+        cities = response.json().get('records', [])
+        for city in cities:
+            if(city['id'] == city_id):
+                return city['fields'].get('City')
+

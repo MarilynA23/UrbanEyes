@@ -79,3 +79,11 @@ class UserDetailsUpdateView(APIView):
             return Response(updated_user, status=status.HTTP_200_OK)
         except requests.RequestException as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+class CityName(APIView):
+    def get(self, request, name):
+        try:
+            city = AirtableService.get_city_name(name)
+            return Response(city, status=status.HTTP_200_OK)
+        except requests.RequestException as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
