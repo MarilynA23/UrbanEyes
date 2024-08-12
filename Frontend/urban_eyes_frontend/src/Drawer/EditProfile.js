@@ -10,37 +10,27 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-
-const BACKEND_URL = '';
+import { BACKEND_SRC } from '@env';
 
 const EditProfile = ({ route }) => {
 
     const navigation = useNavigation();
 
   // extracting details
-//   const {profile} = route.params;
+  const {profile} = route.params;
 
-//   const [name, setName] = useState(profile.Name);
-//   const [email, setEmail] = useState(profile['Email Id']);
-//   const [city, setCity] = useState(profile.City[0]);
-//   const [username, setUsername] = useState(profile.Username);
-//   const [password, setPassword] = useState(profile.Password);
-//   const [contact, setContact] = useState(profile['Contact Number']);
-
-  const [name, setName] = useState("Jake Smith")
-  const [email, setEmail] = useState("jake123@gmail.com")
-  const [city, setCity] = useState("London")
-  const [username, setUsername] = "Jake"
-  const [password, setPassword] = "Jake1234"
-  const [contact, setContact] = useState('+9900000011');
+  const [name, setName] = useState(profile.Name);
+  const [email, setEmail] = useState(profile['Email Id']);
+  const [city, setCity] = useState(profile.City[0]);
+  const [username, setUsername] = useState(profile.Username);
+  const [password, setPassword] = useState(profile.Password);
+  const [contact, setContact] = useState(profile['Contact Number']);
 
   const makeChanges = async () => {
 
-    navigation.navigate("ProfileMain");
-
     let requestBody = {};
 
-    const newprof = 
+    let newprof = 
       {
             "City": [
                 city
@@ -53,14 +43,22 @@ const EditProfile = ({ route }) => {
       }
 
       for(key in newprof) {
+        // remove this once dhruv adds city
+        if(key == "City") {
+          continue;
+        }
         if(profile[key] !== newprof[key]) {
           requestBody[key] = newprof[key];
         }
       }
 
+      console.log(JSON.stringify(requestBody) + " ------ is requestBody");
+
     try {
-      const response = axios.patch(BACKEND_URL + `updateuserdetails/${profile.Username}`, requestBody);
-      alert("Received response. " + response.data.fields);
+      const response = await axios.patch(BACKEND_SRC + `updateuserdetails/${profile.Username}`, requestBody);
+      alert("Received response. " + JSON.stringify(response.data.fields));
+      navigation.navigate("ProfileMain", {prof: response.data.fields});
+
     }
     catch(error) {
       let errorMsg = '';
@@ -80,7 +78,7 @@ const EditProfile = ({ route }) => {
                 }
               }
             }
-            alert(errorMsg + " errorMsg");
+            console.log(error.message);
     }
 
   }

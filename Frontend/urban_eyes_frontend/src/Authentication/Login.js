@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { View, Image, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import authTheme from '../Themes/AuthTheme';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { BACKEND_SRC } from '@env';
 
-const BACKEND_URL = '';
 
 const Login = ({ navigation, onLoginSuccess }) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     // const navigation = useNavigation();
+
 
     const respExample = {
         "id": "recwtMw0DwkPB2AaC",
@@ -45,12 +47,31 @@ const Login = ({ navigation, onLoginSuccess }) => {
         // }
 
         try {
-            const response = await axios.get(BACKEND_URL + `user/${userName}`);
-            alert("Received response. " + response.data);
+            const response = await axios.get(BACKEND_SRC + `user/${userName}`);
+            console.log("Received response. " + JSON.stringify(response.data, null, 2));
+
+            if (!response.data) {
+                alert("Wrong username. Try again.");
+                setUserName('');
+                setPassword('');
+                return;
+            }
+
+            // checking wrong password
+            if (response.data.Password !== password) {
+                alert("Wrong Password, try again.");
+                return;
+            }
+
+            alert("Logged in successfully!")
+
+            if (onLoginSuccess) {
+                    onLoginSuccess();
+                }
 
             // Navigate to home by sending the code.
             // This idk how, need to check.
-            navigation.navigate("Home", {profile: response.data});
+            // navigation.navigate("Home", {profile: response.data});
           }
         catch(error) {
             let errorMsg = '';
@@ -69,7 +90,7 @@ const Login = ({ navigation, onLoginSuccess }) => {
                     errorMsg = error.response.data.message;
                 }
                 else if (error.request) {
-                    errorMsg = error.request;
+                    errorMsg = error.request.data.message;
                 }
                 else {
                     errorMsg = error.message;
@@ -77,15 +98,17 @@ const Login = ({ navigation, onLoginSuccess }) => {
               }
             }
             alert(errorMsg + " errorMsg");
+            console.log(error.message)
         }
-
-        alert(`Login attempt with: ${respExample.fields.Username} and ${respExample.fields.Password}`);
+        finally {
+            // alert(`Login attempt with: ${respExample.fields.Username} and ${respExample.fields.Password}`);
 
           // again navigation: we need to see
-        if (onLoginSuccess) {
-            onLoginSuccess();
+        // if (onLoginSuccess) {
+        //     onLoginSuccess();
+        // }
+        // navigation.navigate("Home", {profile: respExample.fields});
         }
-        navigation.navigate("Home", {profile: respExample.fields});
         
     };
 
@@ -96,7 +119,7 @@ const Login = ({ navigation, onLoginSuccess }) => {
             </View>
             <View style={styles.imageContainer}>
                 <Image
-                    source={require('../../assets/logo.png')} // Replace with the path to your image file
+                    source={require('../../assets/logo.png')}
                     style={styles.logo}
                 />
             </View>
@@ -118,8 +141,8 @@ const Login = ({ navigation, onLoginSuccess }) => {
                     secureTextEntry
                     placeholderTextColor={authTheme.colors.tertiary}
                 />
-                <TouchableOpacity style={styles.forgotPassword} onPress={() => alert('Forgot password?')}> {/*navigation.native to forgot password */}
-                     <Text style={styles.forgotPasswordText}>Forgot password?</Text>  { /* Replace this too take you to a form to enter an email to get resent passwd link */}
+                <TouchableOpacity style={styles.forgotPassword} onPress={() => alert('Forgot password?')}>
+                     <Text style={styles.forgotPasswordText}>Forgot password?</Text> 
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Log in</Text>

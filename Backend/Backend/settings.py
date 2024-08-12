@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-n(9*qqc1n&0e%k2q4zc7q)74#p6aa!hj*27n5%_q^7n7v-&ut$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', ] # ADD Local machine IP address here.
 
 
 # Application definition
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-    'Backend'
+    'Backend',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
 
 ROOT_URLCONF = 'Backend.urls'
@@ -140,6 +143,8 @@ USER_DETAILS_TABLE = os.getenv('USER_DETAILS_TABLE')
 
 CITIES_TABLE = os.getenv('CITIES_TABLE')
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000'
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000'
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True

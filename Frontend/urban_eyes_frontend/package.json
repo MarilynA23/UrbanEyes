@@ -15,6 +15,7 @@
     "@react-navigation/native-stack": "*",
     "@react-navigation/stack": "^6.4.1",
     "axios": "*",
+    "babel-plugin-dotenv": "^0.1.1",
     "expo": "^51.0.26",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
@@ -28,7 +29,8 @@
     "react-native-vector-icons": "*"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "babel-plugin-dotenv-import": "^3.0.1"
   },
   "private": true,
   "name": "urban_eyes_frontend",

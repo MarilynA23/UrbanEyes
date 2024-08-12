@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import authTheme from '../Themes/AuthTheme'; // Adjust the path according to your folder structure
 import axios from 'axios';
+import { BACKEND_SRC } from '@env';
 
-const BACKEND_URL = '';
 
 // Placeholder function to simulate checking if the email is in use
 const isEmailInUse = (email) => {
@@ -17,6 +17,7 @@ const SignUpPage = ({ navigation, onSignUpSuccess }) => {
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
     const [name, setName] = useState('');
+    const [city, setCity] = useState('');
     const [userName, setUserName] = useState('');
     const [contactNo, setContactNo] = useState('');
 
@@ -72,12 +73,18 @@ const SignUpPage = ({ navigation, onSignUpSuccess }) => {
         };
 
         try {
+            alert("In here signup");
 
-            const response = axios.put(BACKEND_URL + 'userdetails/', requestBody);
-            alert("Received response. " + response.data.fields);
+            const response = await axios.post(BACKEND_SRC + 'userdetails/', requestBody, {
+                headers: {
+                  'Content-Type': 'application/json',
+                }});
+
+            console.log("Received response. " + JSON.stringify(response.data.fields, null, 2));
+
             // Navigate to home by sending the code.
-            // This idk how, need to check.
-            navigation.navigate("Home", {profile: response.data.fields});
+            alert("navigating to home");
+            // navigation.navigate("Home", {profile: response.data.fields});
 
         }
         catch(error) {
@@ -100,24 +107,27 @@ const SignUpPage = ({ navigation, onSignUpSuccess }) => {
                 }
                 else if (error.request) {
                     errorMsg = error.request;
+                    alert("req "  + errorMsg)
                 }
                 else {
                     errorMsg = error.message;
                 }
               }
             }
-            alert(errorMsg + " errorMsg");
+            console.log(errorMsg + " errorMsg");
+            alert(error.message + " whyyyyyyy")
+            console.error("Error: ", error);
         }
 
-        alert(`SignIn attempt with: ${respExample.fields.Username} and ${respExample.fields.Password}`);
+        // alert(`SignIn attempt with: ${respExample.fields.Username} and ${respExample.fields.Password}`);
 
-        // Simulate successful sign-up
-        alert('Signed up successfully!');
-        if (onSignUpSuccess) {
-            onSignUpSuccess();
-        }
+        // // Simulate successful sign-up
+        // alert('Signed up successfully!');
+        // if (onSignUpSuccess) {
+        //     onSignUpSuccess();
+        // }
 
-        navigation.navigate("Home", {profile: respExample.fields});
+        // navigation.navigate("Home", {profile: respExample.fields});
     };
 
     return (

@@ -16,24 +16,40 @@ import { useNavigation } from '@react-navigation/native';
 const Profile = ({route}) => {
 
   const navigation = useNavigation();
+  // example profile
+  let profile = {
+    "City": [
+        "recTB6GAGDXqR2Jcn"
+    ],
+    "Email Id": "white.black@example.com",
+    "Contact Number": "+00 1234567890",
+    "Name": "White Black",
+    "Username": "wb123",
+    "Password": "WhiteBlack123",
+    "Longitude": [
+        -0.176894
+    ],
+    "Latitude": [
+        51.498356
+    ]
+  }
 
-  // const {profile} = route.params;
-  // we need to have this from home, and send it to EditProfile.
+  // extracting details
+  console.log(JSON.stringify(route.params) + " ------ is from the route");
+  if (route.params) {
+    let {prof} = route.params;
+    profile = prof;
+  }
+  
+  console.log(JSON.stringify(profile));
 
-  // alert(`prof is ${JSON.stringify(profile)}`)
-  // // extracting details
-  // const name = profile.Name;
-  // const email = profile['Email Id'];
-  // const city = profile.City;
-  // const contact = profile['Contact Number'];
-  // const username = profile.Username;
-  // const password = profile.Password;
-  const name = "Jake Smith"
-  const email = "jake123@gmail.com"
-  const city = "London"
-  const username = "Jake"
-  const password = "Jake1234"
-  const contact = "+4401234567890"
+  // extracting details
+  const name = profile.Name;
+  const email = profile['Email Id'];
+  const city = profile.City;
+  const contact = profile['Contact Number'];
+  const username = profile.Username;
+  const password = profile.Password;
 
   return (
     <>
@@ -108,16 +124,9 @@ const Profile = ({route}) => {
         </View>
 
         <View
-          style={
-            {
-              flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-            }
-          }>
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
           <Button title="Edit Profile" color={"#c14961"} style= {styles.button} onPress={() => 
-            navigation.navigate("EditProfile", {EditProfile})} />
+            navigation.navigate("EditProfile", {profile})} />
           </View>
 
           <View

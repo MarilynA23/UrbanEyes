@@ -12,8 +12,20 @@ import Chat from "../Drawer/Chat";
 import EditProfile from '../Drawer/EditProfile';
 import appTheme from '../Themes/AppTheme';
 import { useFocusEffect } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+const ProfileStack = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="ProfileMain" component={Profile} options={{ headerShown: false }}/>
+            <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }}/>
+        </Stack.Navigator>
+    );
+};
+
 
 const LogoutHandler = ({ setIsLoggedIn }) => {
     const navigation = useNavigation();
@@ -66,7 +78,7 @@ const DrawerNavigator = ({ setIsLoggedIn }) => {
             drawerInactiveTintColor: appTheme.colors.secondary, // Color of the inactive item text
         }}>
             <Drawer.Screen name="Home" component={TabsNavigator} />
-            <Drawer.Screen name="Profile" component={Profile} />
+            <Drawer.Screen name="Profile" component={ProfileStack} />
             <Drawer.Screen name="Chat" component={Chat} />
             <Drawer.Screen name="Settings" component={Settings} />
             <Drawer.Screen name="Contact Us" component={ContactUsPage} />

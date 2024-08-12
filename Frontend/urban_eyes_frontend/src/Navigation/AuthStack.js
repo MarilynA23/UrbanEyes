@@ -9,10 +9,10 @@ const Stack = createStackNavigator();
 const AuthStack = ({ screenProps }) => {
     return (
         <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login">
+            <Stack.Screen name="Login" options={{ headerShown: false }}>
                 {props => <Login {...props} onLoginSuccess={screenProps.onLoginSuccess} />}
             </Stack.Screen>
-            <Stack.Screen name="SignUp">
+            <Stack.Screen name="SignUp" options={{ headerShown: false }}>
                 {props => <SignUp {...props} onSignUpSuccess={screenProps.onSignUpSuccess} />}
             </Stack.Screen>
         </Stack.Navigator>
