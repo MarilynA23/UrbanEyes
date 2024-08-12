@@ -3,8 +3,8 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 
 import authTheme from '../Themes/AuthTheme'; // Adjust the path according to your folder structure
 import { useNavigation } from '@react-navigation/native';
 
-const Report = ({currCoordinate, addMarker, setError}) => {
-
+const Report = ({route, navigation}) => {
+    const { coordinate, addMarker } = route.params;
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('');
     const [addr, setAddr] = useState('');
@@ -12,25 +12,28 @@ const Report = ({currCoordinate, addMarker, setError}) => {
     const [status, setStatus] = useState('Open');
     const [location, setLocation] = useState('');
     const [addnComments, setAddnComments] = useState('');
-    const navigation = useNavigation()
+    //const navigation = useNavigation()
 
     const handleSubmitReport = useCallback(() => {
         if (!title.trim()) {
-            setError('Please enter a title for the report.');
+            //setError('Please enter a title for the report.');
             return;
         }
         if (!description.trim()) {
-            setError('Please enter a description for the report.');
+            //setError('Please enter a description for the report.');
             return;
         }
-        alert("Issue Reported")
-        addMarker({ coordinate: currCoordinate, title: title, description: description });
-        setTitle('');
-        setAddr('');
-        setDescription('');
-        setError(''); // Clear the error message
-        navigation.navigate("Map")
-    }, [currCoordinate, title, description, addMarker]);
+        if (addMarker && coordinate) {
+            addMarker({ coordinate: coordinate, title, description });
+            alert("Issue Reported");
+            setTitle('');
+            setDescription('');
+            navigation.navigate("Map");
+        } else {
+            console.error("addMarker function or coordinate is missing");
+            // You might want to show an error message to the user here
+        }
+    }, [coordinate, title, description, addMarker,navigation]);
 
     return ( 
         <ScrollView contentContainerStyle={styles.contentContainer}>

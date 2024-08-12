@@ -15,8 +15,8 @@ const Map = ({ markers, addMarker}) => {
         setCurrentCoordinate(coordinate);
         //setModalVisible(true);
         setError(''); // Clear any previous errors
-        navigation.navigate("Report", {currCoordinate:currentCoordinate, addMarker:addMarker,setError : setError})
-    }, []);
+        navigation.navigate("Report", {coordinate,addMarker})
+    }, [navigation,addMarker]);
 
     
 

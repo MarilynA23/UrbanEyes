@@ -63,7 +63,7 @@ const TabsNavigator = () => {
                     },
                 }}/>
             <Tab.Screen name="Map">
-                {() => <Map markers={markers} addMarker={addMarker}/>}
+                {() => <Map markers={markers} addMarker={addMarker} setMarkers={setMarkers}/>}
             </Tab.Screen>
             <Tab.Screen name="Track" component={Track} />
         </Tab.Navigator>
